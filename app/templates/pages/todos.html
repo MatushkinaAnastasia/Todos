@@ -1,0 +1,74 @@
+{% extends "layouts/base.html" %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-4" style="min-width: 30%;" >
+        <section class="card card-default w-50 mx-auto" style="min-width: 100%;">
+            <h4 class="card-header">Create new TODO</h4>
+            <form action="/todos" method="POST" class="card-body" id="form-add-todo">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" name="title" id="title-input">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1" name="description" id="description-input">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </section>
+        <div style="margin-top: 12px;">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="filterTitle">Title</label>
+                </div>
+                <input type="text" class="form-control" id="filterTitle">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="filterDone">Done</label>
+                </div>
+                <select class="custom-select" id="filterDone">
+                    <option value="Done">Done</option>
+                    <option value="Not done">Not done</option>
+                    <option value="No matter" selected="selected">No matter</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="toFilter()">Filter</button>
+        </div>
+    </div>
+      <div class="col-6"  style="min-width: 65%;">
+        <div class="d-flex flex-wrap" id="todos">
+            {% for todo in todos %}
+            <div id="todo{{todo.id}}" class="card text-white bg-primary mb-3" style="max-width: 18rem; margin-left: 10px; min-width: 160px;">
+                {% if todo.done == 0 %}
+                <h5 class="card-header">{{ todo.title }}</h5>
+                <div class="card-body">
+                    <p class="card-text">{{ todo.description }}</p>
+                </div>
+                {% else %}
+                <h5 class="card-header my-text-decoration">{{ todo.title }}</h5>
+                <div class="card-body my-text-decoration">
+                    <p class="card-text">{{ todo.description }}</p>
+                </div>
+                 {% endif %}
+
+                <div class="my-container">
+                    <button type="submit" class="btn btn-primary my-button" onclick="completeTodo({{ todo.id }})">√</button>
+                    <form action="/todos/{{todo.id}}">
+                        <button type="submit" class="btn btn-primary my-button">💬</button>
+                    </form>
+                    <button type="submit" class="btn btn-primary my-button" onclick="deleteTodo({{ todo.id }})">х</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

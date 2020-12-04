@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+
+{% block main %}
+
+<div class="container">
+    <div class="my-container">
+        <div>
+            <div id="todo{{todo.id}}" class="card text-white bg-primary mb-3" style="max-width: 18rem; min-width: 160px;">
+                {% if todo.done == 0 %}
+                <h5 class="card-header">{{ todo.title }}</h5>
+                <div class="card-body">
+                    <p class="card-text">{{ todo.description }}</p>
+                </div>
+                {% else %}
+                <h5 class="card-header my-text-decoration">{{ todo.title }}</h5>
+                <div class="card-body my-text-decoration">
+                    <p class="card-text">{{ todo.description }}</p>
+                </div>
+                {% endif %}
+            
+                <button type="submit" class="btn btn-primary" onclick="completeTodo({{ todo.id }})">√</button>
+            </div>
+            <form action="/todos">
+                <button type="submit" class="btn btn-primary my-button">Back</button>
+            </form>
+        </div>
+        <div style="margin-left: 50px; min-width: 50%;">
+            <ul class="list-group" id="comments">
+                <li class="list-group-item active">Comments:</li>
+            </ul>
+            <div id="spinner" class="spinner-border text-primary" role="status" style="margin: auto; display: flex; margin-top: 40px; margin-bottom: 40px;"></div>
+            <button id="butLoad" class="btn btn-primary my-button" onclick="loadComments({{ todo.id }})" style="margin: auto; display: flex; margin-top: 10px;">Load</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

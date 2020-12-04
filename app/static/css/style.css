@@ -1,0 +1,12 @@
+.my-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.my-button {
+    margin: auto;
+}
+
+.my-text-decoration {
+    text-decoration: line-through;
+}
